@@ -3,10 +3,8 @@ package cz.muni.fi.pa165.currency;
 import java.math.BigDecimal;
 import java.util.Currency;
 import org.junit.Test;
-//import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.assertj.core.api.Assertions.*;
-import org.mockito.Mockito;
 import static org.mockito.Mockito.when;
 
 public class CurrencyConvertorImplTest {
@@ -20,16 +18,16 @@ public class CurrencyConvertorImplTest {
         CurrencyConvertor cc = new CurrencyConvertorImpl(exchangeRateTable);
         when(exchangeRateTable.getExchangeRate(EUR, CZK)).thenReturn(new BigDecimal("25.54"));
 
-        assertThat(cc.convert(EUR, CZK, new BigDecimal("10.00"))).isEqualTo((new BigDecimal("255.40")));
+        assertThat(cc.convert(EUR, CZK, new BigDecimal("9.97"))).isEqualTo((new BigDecimal("254.63")));
     }
 
     @Test
     public void testConvertWithNullSourceCurrency() {
         CurrencyConvertor cc = new CurrencyConvertorImpl(mock(ExchangeRateTable.class));
 
-        assertThatThrownBy(() -> {
-            BigDecimal convert = cc.convert(null, CZK, new BigDecimal("10.50"));
-        }).isInstanceOf(IllegalArgumentException.class);;
+        assertThatThrownBy(() -> 
+            cc.convert(null, CZK, new BigDecimal("10.50"))
+        ).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
